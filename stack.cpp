@@ -1,4 +1,6 @@
 /*
+	FILE  : linklistclass.cpp
+	--------------------------------------------------
 	Program to implement a stack in C++ (using arrays)
 
 	CODER : Arjun Krishna Babu
@@ -11,6 +13,7 @@
 */
 
 #include<iostream>
+
 #define OVERFLOW_MESSAGE  cout<<"\n ERROR: Overflow!"
 #define UNDERFLOW_MESSAGE cout<<"\n ERROR: Underflow!"
 
@@ -77,17 +80,13 @@ int main()	{
 
 /***** MEMBER FUNCTION DEFINITION *****/
 bool Stack::isFull()	{
-	if( top == (SIZE - 1) )	
-		return true;
-	else
-		return false;
+	//returns true if top is equal to (size - 1), or false otherwise
+	return (top == (SIZE - 1))? true : false;
 }
 
 bool Stack::isEmpty()	{
-	if( top == -1 )
-		return true;
-	else
-		return false;
+	//returns true if top equals -1, or false otherwise
+	return (top == -1)? true : false;
 }
 
 void Stack::push(int data)	{	
@@ -98,8 +97,10 @@ void Stack::push(int data)	{
 }
 
 int Stack::pop()	{
-	if( isEmpty() )
+	if( isEmpty() )	{
 		UNDERFLOW_MESSAGE;
+		return -1;
+	}
 	else
 		return A[top--];
 }
