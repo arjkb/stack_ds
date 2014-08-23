@@ -1,5 +1,5 @@
 /*
-	FILE  : linklistclass.cpp
+	FILE  : stack.cpp
 	--------------------------------------------------
 	Program to implement a stack in C++ (using arrays)
 
