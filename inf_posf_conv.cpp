@@ -1,7 +1,19 @@
 /*
+	FILE:	inf_posf_conv.cpp
+	------------------------------------------------------------------
 	Program to convert an infix expression into a postfix expression.
-	
-	224H14 -- Arjun Krishna Babu
+
+	KNOWN BUGS:
+		1. Seems to convert only if whole expresion is within parenthesis
+
+	--------------------------------------
+	CODER	: Arjun Krishna Babu
+	DATE	: 25 - August - 2014
+
+	COMPILER	: G++
+	OS			: Ubuntu 12.04 LTS
+	PROCESSOR	: 4th gen. Inter Core i5
+	--------------------------------------
 */
 
 #include<iostream>
@@ -9,7 +21,6 @@
 #include<cstring>
 
 using namespace std;
-
 
 bool prcd(char A, char B);	//returns true if A has higher precedence than B,  false otherwise
 bool isOperand(char);		//returns true if character is an operand, 		   false otherwise
@@ -52,7 +63,7 @@ int main()	{
 			P[++k] = symb;
 		}
 		else if( isOperator(symb) )	{
-
+			cout<<"\n OPERATOR ELS";
 			//pop till stack is empty/top is open bracket/top has lower precedence
 			while( !S.isEmpty() && !isOpenBracket(S.peek()) && prcd(S.peek(), symb) )	{
 				P[++k] = S.pop();		//push to postfix
@@ -66,10 +77,14 @@ int main()	{
 			S.dispAll();
 		}
 
-		else if( isOpenBracket(symb) )	
+		else if( isOpenBracket(symb) )	{
+			cout<<"\n OPEN-BRAC ELS";
 			S.push(symb);
+		}
 	
 		else if( isCloseBracket(symb) )	{
+			
+			cout<<"\n CLOSE-BRAC ELS";
 
 			//if closing bracket is encountered, pop till you get an opening bracket
 			while( !S.isEmpty() && !isOpenBracket(S.peek()) )	{
@@ -78,10 +93,12 @@ int main()	{
 		}
 	}	//end of for
 
-	while( !S.isEmpty() )
-		P[++k] = symb;
+	while( !S.isEmpty() )	{
+		cout<<"\n OUTER WHILE!";
+		P[++k] = S.pop();
+	}
 
-	cout<<"\n Postfix Expression: "<<P;
+	cout<<"\n\n Postfix Expression: "<<P;
 		
    cout<<"\n\n";
    return 0;
