@@ -3,9 +3,6 @@
 	------------------------------------------------------------------
 	Program to convert an infix expression into a postfix expression.
 
-	KNOWN BUGS:
-		1. Seems to convert only if whole expresion is within parenthesis
-
 	--------------------------------------
 	CODER	: Arjun Krishna Babu
 	DATE	: 25 - August - 2014
@@ -49,8 +46,8 @@ int main()	{
 	char E[100];
 	char P[100] = {'\0'}; int k = -1;
 
-	int symb;
-	int garb;
+	char symb;
+	char garb;
 
 	cout<<"\n Enter an infix expression: "; gets(E);
 
@@ -58,12 +55,10 @@ int main()	{
 
 		symb = E[i];
 
-		if( isOperand(symb) )	{	//add to postfix is symbol is an operand
-			cout<<"\n Pushing symbol "<<symb;
+		if( isOperand(symb) )		//add to postfix is symbol is an operand
 			P[++k] = symb;
-		}
+
 		else if( isOperator(symb) )	{
-			cout<<"\n OPERATOR ELS";
 			//pop till stack is empty/top is open bracket/top has lower precedence
 			while( !S.isEmpty() && !isOpenBracket(S.peek()) && prcd(S.peek(), symb) )	{
 				P[++k] = S.pop();		//push to postfix
@@ -73,19 +68,12 @@ int main()	{
 				garb = S.pop();			//get rid of it
 			
 			S.push(symb);
-
-			S.dispAll();
 		}
 
-		else if( isOpenBracket(symb) )	{
-			cout<<"\n OPEN-BRAC ELS";
+		else if( isOpenBracket(symb) )	
 			S.push(symb);
-		}
-	
+		
 		else if( isCloseBracket(symb) )	{
-			
-			cout<<"\n CLOSE-BRAC ELS";
-
 			//if closing bracket is encountered, pop till you get an opening bracket
 			while( !S.isEmpty() && !isOpenBracket(S.peek()) )	{
 				P[++k] = S.pop();
@@ -93,11 +81,9 @@ int main()	{
 		}
 	}	//end of for
 
-	while( !S.isEmpty() )	{
-		cout<<"\n OUTER WHILE!";
+	while( !S.isEmpty() )	
 		P[++k] = S.pop();
-	}
-
+	
 	cout<<"\n\n Postfix Expression: "<<P;
 		
    cout<<"\n\n";
@@ -106,7 +92,7 @@ int main()	{
 
 /*** MEMBER FUNCTION DEFINITIONS ***/
 bool prcd(char a, char b)	{
-	//returns true if A has higher precedence than B
+	//returns true if A has equal or higher precedence than B, false otherwise
 	switch(a)	{
 		case '^': return false;
 		case '*':
@@ -175,7 +161,6 @@ char Stack::peek()	{
 }
 
 void Stack::dispAll()	{
-	cout<<"\n STACL-ELEM:";
 	for(int i = 0; i <= top; i++)	
 		cout<<" "<<A[i];
 }
